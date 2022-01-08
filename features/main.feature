@@ -1,6 +1,9 @@
 Feature: Main Page
 	
 	Background:
+		Given Login: A user is on the login page
+		When Login: A user enters correct login credentials
+		Then Login: The user is redirected to their main feed
 		Given Main: The user is on the main page
 	
 	Scenario: The user adds an image to their draft post and the image preview is displayed

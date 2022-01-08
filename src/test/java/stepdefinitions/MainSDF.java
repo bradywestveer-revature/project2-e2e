@@ -16,7 +16,7 @@ public class MainSDF {
 	
 	@Given ("Main: The user is on the main page")
 	public void main_the_user_is_on_the_main_page () {
-		DriverSingleton.getInstance ().get ("http://localhost:4200");
+		assertEquals ("http://localhost:4200/", DriverSingleton.getInstance ().getCurrentUrl ());
 	}
 	
 	@When ("Main: The user adds an image to their draft post")
@@ -168,4 +168,6 @@ public class MainSDF {
 	public void main_the_user_is_redirected_to_the_clicked_user_s_profile_page () {
 		
 	}
+	
+	//todo test redirect to /login if not logged in
 }
