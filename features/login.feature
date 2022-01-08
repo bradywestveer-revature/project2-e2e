@@ -1,5 +1,8 @@
 Feature: Login Page
   Background:
+    Given A user is on the register page
+    When The user enters valid user information
+    Then The user will be redirected to the login page
     Given A user is on the login page
   Scenario: Logging in with valid credentials will redirect to users main feed
     When A user enters correct login credentials

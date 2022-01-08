@@ -34,7 +34,7 @@ public class LoginPOM {
     @FindBy(linkText = "Forgot Password")
     WebElement resetPWordBtn;
 
-    @FindBy(tagName = "errorText")
+    @FindBy(className = "errorText")
     WebElement errMessage;
 
     public void usernameInput(String username){
@@ -53,16 +53,20 @@ public class LoginPOM {
         registerBtn.click();
     }
 
-    public void clickPasswordResetBtn(){
+    public void clickForgotPasswordBtn(){
         resetPWordBtn.click();
     }
 
     public String getErrorMessage(){
-        this.wait.until(ExpectedConditions.visibilityOf(this.errMessage));
+        this.wait.until(ExpectedConditions.visibilityOf(errMessage));
         return this.errMessage.getText();
     }
 
     public String getCurrentUrl(){
         return this.driver.getCurrentUrl();
+    }
+
+    public void waitForSuccessfulLogin(){
+        this.wait.until(ExpectedConditions.urlToBe("http://localhost:4200/"));
     }
 }

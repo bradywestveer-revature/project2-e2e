@@ -24,45 +24,42 @@ public class LoginSDF {
     }
     @When("A user enters correct login credentials")
     public void a_user_enters_correct_login_credentials() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.loginPOM.usernameInput("SeleniumTest");
+        this.loginPOM.passwordInput("test");
+        this.loginPOM.clickLogin();
     }
     @Then("The user is redirected to their main feed")
     public void the_user_is_redirected_to_their_main_feed() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.loginPOM.waitForSuccessfulLogin();
+        Assertions.assertEquals("http://localhost:4200/", this.loginPOM.getCurrentUrl());
     }
 
     @When("A user enters incorrect login credentials")
     public void a_user_enters_incorrect_login_credentials() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.loginPOM.usernameInput("steel");
+        this.loginPOM.passwordInput("steal");
+        this.loginPOM.clickLogin();
     }
     @Then("An invalid credentials message shows on login form")
     public void an_invalid_credentials_message_shows_on_login_form() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        Assertions.assertEquals("Error! Invalid credentials", this.loginPOM.getErrorMessage());
     }
 
     @When("A user clicks on the create account button")
     public void a_user_clicks_on_the_create_account_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.loginPOM.clickRegisterBtn();
     }
     @Then("The user is redirected to the register page")
     public void the_user_is_redirected_to_the_register_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        Assertions.assertEquals("http://localhost:4200/register", this.loginPOM.getCurrentUrl());
     }
 
     @When("A user clicks on the forgot password button")
     public void a_user_clicks_on_the_forgot_password_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.loginPOM.clickForgotPasswordBtn();
     }
     @Then("The user is redirected to the reset password page")
     public void the_user_is_redirected_to_the_reset_password_page() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        Assertions.assertEquals("http://localhost:4200/reset-password", this.loginPOM.getCurrentUrl());
     }
 }
