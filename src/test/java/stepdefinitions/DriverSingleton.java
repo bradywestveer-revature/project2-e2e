@@ -19,8 +19,10 @@ public class DriverSingleton {
 	}
 	
 	public static void quitInstance () {
-		driver.quit ();
-		
-		driver = null;
+		if (driver != null) {
+			driver.quit ();
+			
+			driver = null;
+		}
 	}
 }
