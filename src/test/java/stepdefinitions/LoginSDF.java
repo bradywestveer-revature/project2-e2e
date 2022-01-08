@@ -1,65 +1,63 @@
 package stepdefinitions;
 
-import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
 import poms.LoginPOM;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginSDF {
 
     LoginPOM loginPOM;
 
-    @After
-    public void tearDown(){
-        DriverSingleton.quitInstance();
+    public LoginSDF () {
+        this.loginPOM = new LoginPOM (DriverSingleton.getInstance ());
     }
 
-    @Given("A user is on the login page")
+    @Given("Login: A user is on the login page")
     public void a_user_is_on_the_login_page() {
         DriverSingleton.getInstance().get("http://localhost:4200");
-        this.loginPOM = new LoginPOM(DriverSingleton.getInstance());
-        Assertions.assertEquals("http://localhost:4200/login", this.loginPOM.getCurrentUrl());
+        assertEquals("http://localhost:4200/login", this.loginPOM.getCurrentUrl());
     }
-    @When("A user enters correct login credentials")
+    @When("Login: A user enters correct login credentials")
     public void a_user_enters_correct_login_credentials() {
         this.loginPOM.usernameInput("SeleniumTest");
         this.loginPOM.passwordInput("test");
         this.loginPOM.clickLogin();
     }
-    @Then("The user is redirected to their main feed")
+    @Then("Login: The user is redirected to their main feed")
     public void the_user_is_redirected_to_their_main_feed() {
         this.loginPOM.waitForSuccessfulLogin();
-        Assertions.assertEquals("http://localhost:4200/", this.loginPOM.getCurrentUrl());
+        assertEquals("http://localhost:4200/", this.loginPOM.getCurrentUrl());
     }
 
-    @When("A user enters incorrect login credentials")
+    @When("Login: A user enters incorrect login credentials")
     public void a_user_enters_incorrect_login_credentials() {
         this.loginPOM.usernameInput("steel");
         this.loginPOM.passwordInput("steal");
         this.loginPOM.clickLogin();
     }
-    @Then("An invalid credentials message shows on login form")
+    @Then("Login: An invalid credentials message shows on login form")
     public void an_invalid_credentials_message_shows_on_login_form() {
-        Assertions.assertEquals("Error! Invalid credentials", this.loginPOM.getErrorMessage());
+        assertEquals("Error! Invalid credentials", this.loginPOM.getErrorMessage());
     }
 
-    @When("A user clicks on the create account button")
+    @When("Login: A user clicks on the create account button")
     public void a_user_clicks_on_the_create_account_button() {
         this.loginPOM.clickRegisterBtn();
     }
-    @Then("The user is redirected to the register page")
+    @Then("Login: The user is redirected to the register page")
     public void the_user_is_redirected_to_the_register_page() {
-        Assertions.assertEquals("http://localhost:4200/register", this.loginPOM.getCurrentUrl());
+        assertEquals("http://localhost:4200/register", this.loginPOM.getCurrentUrl());
     }
 
-    @When("A user clicks on the forgot password button")
+    @When("Login: A user clicks on the forgot password button")
     public void a_user_clicks_on_the_forgot_password_button() {
         this.loginPOM.clickForgotPasswordBtn();
     }
-    @Then("The user is redirected to the reset password page")
+    @Then("Login: The user is redirected to the reset password page")
     public void the_user_is_redirected_to_the_reset_password_page() {
-        Assertions.assertEquals("http://localhost:4200/reset-password", this.loginPOM.getCurrentUrl());
+        assertEquals("http://localhost:4200/reset-password", this.loginPOM.getCurrentUrl());
     }
+
 }

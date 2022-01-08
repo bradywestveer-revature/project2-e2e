@@ -1,4 +1,5 @@
 Feature: Main Page
+	
 	Background:
 		Given Main: The user is on the main page
 	

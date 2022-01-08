@@ -12,10 +12,11 @@ import java.util.List;
 
 public class LoginPOM {
 
+
     WebDriver driver;
     WebDriverWait wait;
 
-    public LoginPOM(WebDriver driver){
+    public LoginPOM(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(5));
 
@@ -37,36 +38,36 @@ public class LoginPOM {
     @FindBy(className = "errorText")
     WebElement errMessage;
 
-    public void usernameInput(String username){
+    public void usernameInput(String username) {
         inputElements.get(0).sendKeys(username);
     }
 
-    public void passwordInput(String password){
+    public void passwordInput(String password) {
         inputElements.get(1).sendKeys(password);
     }
 
-    public void clickLogin(){
+    public void clickLogin() {
         loginBtn.click();
     }
 
-    public void clickRegisterBtn(){
+    public void clickRegisterBtn() {
         registerBtn.click();
     }
 
-    public void clickForgotPasswordBtn(){
+    public void clickForgotPasswordBtn() {
         resetPWordBtn.click();
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         this.wait.until(ExpectedConditions.visibilityOf(errMessage));
         return this.errMessage.getText();
     }
 
-    public String getCurrentUrl(){
+    public String getCurrentUrl() {
         return this.driver.getCurrentUrl();
     }
 
-    public void waitForSuccessfulLogin(){
+    public void waitForSuccessfulLogin() {
         this.wait.until(ExpectedConditions.urlToBe("http://localhost:4200/"));
     }
 }

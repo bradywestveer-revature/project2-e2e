@@ -14,7 +14,7 @@ public class RegisterPOM {
     WebDriver driver;
     WebDriverWait wait;
 
-    public RegisterPOM(WebDriver driver){
+    public RegisterPOM(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(5));
 
@@ -33,50 +33,48 @@ public class RegisterPOM {
     @FindBy(linkText = "Login to an existing account")
     WebElement loginPageBtn;
 
-    public void firstNameInput(String firstName){
+    public void firstNameInput(String firstName) {
         inputs.get(0).sendKeys(firstName);
     }
 
-    public void lastNameInput(String lastName){
+    public void lastNameInput(String lastName) {
         inputs.get(1).sendKeys(lastName);
     }
 
-    public void emailInput(String email){
+    public void emailInput(String email) {
         inputs.get(2).sendKeys(email);
     }
 
-    public void usernameInput(String username){
+    public void usernameInput(String username) {
         inputs.get(3).sendKeys(username);
     }
 
-    public void passwordInput(String password){
+    public void passwordInput(String password) {
         inputs.get(4).sendKeys(password);
     }
 
-    public void confirmPasswordInput(String confirmPassword){
+    public void confirmPasswordInput(String confirmPassword) {
         inputs.get(5).sendKeys(confirmPassword);
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         this.wait.until(ExpectedConditions.visibilityOf(errMessage));
         return this.errMessage.getText();
     }
 
-    public void clickRegisterBtn(){
+    public void clickRegisterBtn() {
         registerBtn.click();
     }
 
-    public void clickLoginPageBtn(){
+    public void clickLoginPageBtn() {
         loginPageBtn.click();
     }
 
-    public void waitForSuccessfulRegister(){
+    public void waitForSuccessfulRegister() {
         this.wait.until(ExpectedConditions.urlToBe("http://localhost:4200/login"));
     }
 
-    public String getCurrentUrl(){
+    public String getCurrentUrl() {
         return this.driver.getCurrentUrl();
     }
-
-
 }
