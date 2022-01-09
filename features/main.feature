@@ -29,41 +29,53 @@ Feature: Main Page
 	
 	Scenario: The user posts with a body and a video link and the post is displayed with a body and the video
 		When Main: The user posts with a body and a video link
-		Then Main: The post is displayed with a body and only the first video
+		Then Main: The post is displayed with a only the first video
 	
-	Scenario: The user posts with a body and multiple video links and the post is displayed with a body and only the first video
+	Scenario: The user posts with a body and multiple video links and the post is displayed with only the first video
 		When Main: The user posts with a body and multiple video links
-		Then Main: The post is displayed with a body and only the first video
+		Then Main: The post is displayed with a only the first video
 	
-	Scenario: The user posts with a body and images and a video link and the post is displayed with a body and images and only the first video
+	Scenario: The user posts with a body and images and a video link and the post is displayed with images and only the first video
 		When Main: The user posts with a body and images and a video link
-		Then Main: The post is displayed with a body and images and only the first video
+		Then Main: The post is displayed with images and only the first video
 	
-	Scenario: The user posts with a body and images and multiple video links and the post is displayed with a body and images and only the first video
+	Scenario: The user posts with a body and images and multiple video links and the post is displayed with images and only the first video
 		When Main: The user posts with a body and images and multiple video links
-		Then Main: The post is displayed with a body and images and only the first video
+		Then Main: The post is displayed with images and only the first video
 	
 	Scenario: The user clicks on the comment button on a post twice and the comments open and close
+		When Main: The user posts with a body
+		Then Main: The post is displayed with a body
 		When Main: The user clicks on the comment button on a post
 		Then Main: The comments open on the post
 		When Main: The user clicks on the comment button on a post
 		Then Main: The comments close on the post
 	
 	Scenario: The user clicks on the like button on a post twice and the like number increases by one and then decreases by one
+		When Main: The user posts with a body
+		Then Main: The post is displayed with a body
 		When Main: The user clicks on the like button on a post
 		Then Main: The post like count increases by one
-		When Main: The user clicks on the like button on a post
+		Then Main: The user clicks on the like button on a post
 		Then Main: The post like count decreases by one
 	
 	Scenario: The user comments on a post and the comment is shown
+		When Main: The user posts with a body
+		Then Main: The post is displayed with a body
+		When Main: The user clicks on the comment button on a post
 		When Main: The user comments on a post
-		Then Main: The comment is displayed
+		Then Main: The comment is displayed and the comment count goes up by one
 	
 	Scenario: The user makes an invalid comment on a post and no new comment is displayed
+		When Main: The user posts with a body
+		Then Main: The post is displayed with a body
+		When Main: The user clicks on the comment button on a post
 		When Main: The user makes an invalid comment on a post
-		Then Main: No new comment is displayed
+		Then Main: No new comment is displayed and the comment count stays the same
 	
 	Scenario: The user scrolls to the bottom of the page and another page of posts is loaded
+		When Main: The user posts 20 posts
+		Then Main: There are 20 posts
 		When Main: The user scrolls to the bottom of the page
 		Then Main: Another page of posts is loaded
 	
