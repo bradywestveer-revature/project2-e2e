@@ -39,6 +39,10 @@ public class SDFHooks {
 		
 		//if user already exists, do nothing
 		catch (UnhandledAlertException ignored) {}
+		
+		finally {
+			DriverSingleton.quitInstance ();
+		}
 	}
 	
 	//runs after every scenario
