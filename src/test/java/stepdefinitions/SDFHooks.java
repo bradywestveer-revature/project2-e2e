@@ -9,9 +9,9 @@ public class SDFHooks {
 	//runs once before everything
 	@BeforeAll
 	public static void setUp () {
+		RegisterPOM registerPOM = new RegisterPOM (DriverSingleton.getInstance ());
+		
 		try {
-			RegisterPOM registerPOM = new RegisterPOM (DriverSingleton.getInstance ());
-			
 			DriverSingleton.getInstance ().get ("http://localhost:4200/register");
 			
 			registerPOM.firstNameInput ("John");
@@ -23,7 +23,16 @@ public class SDFHooks {
 			registerPOM.clickRegisterBtn ();
 			
 			registerPOM.waitForSuccessfulRegister ();
-			
+		}
+		
+		//if user already exists, do nothing
+		catch (UnhandledAlertException ignored) {}
+		
+		finally {
+			DriverSingleton.quitInstance ();
+		}
+		
+		try {
 			DriverSingleton.getInstance ().get ("http://localhost:4200/register");
 			
 			registerPOM.firstNameInput ("Dr. Sarah");
@@ -35,7 +44,16 @@ public class SDFHooks {
 			registerPOM.clickRegisterBtn ();
 			
 			registerPOM.waitForSuccessfulRegister ();
-			
+		}
+		
+		//if user already exists, do nothing
+		catch (UnhandledAlertException ignored) {}
+		
+		finally {
+			DriverSingleton.quitInstance ();
+		}
+		
+		try {
 			DriverSingleton.getInstance ().get ("http://localhost:4200/register");
 			
 			registerPOM.firstNameInput ("D");
