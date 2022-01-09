@@ -35,6 +35,16 @@ public class SDFHooks {
 			registerPOM.clickRegisterBtn ();
 			
 			registerPOM.waitForSuccessfulRegister ();
+			
+			DriverSingleton.getInstance ().get ("http://localhost:4200/register");
+			
+			registerPOM.firstNameInput ("D");
+			registerPOM.lastNameInput ("d");
+			registerPOM.emailInput ("player1foreverr@gmail.com");
+			registerPOM.usernameInput ("d");
+			registerPOM.passwordInput ("d");
+			registerPOM.confirmPasswordInput ("d");
+			registerPOM.clickRegisterBtn ();
 		}
 		
 		//if user already exists, do nothing

@@ -20,23 +20,6 @@ public class RegisterSDF {
         assertEquals("http://localhost:4200/register", this.registerPOM.getCurrentUrl());
 	}
 	
-	@When ("Register: The user enters valid user information")
-	public void register_the_user_enters_valid_user_information () {
-        this.registerPOM.firstNameInput("Selenium");
-        this.registerPOM.lastNameInput("Test");
-        this.registerPOM.emailInput("test@mail.com");
-        this.registerPOM.usernameInput("SeleniumTest");
-        this.registerPOM.passwordInput("test");
-        this.registerPOM.confirmPasswordInput("test");
-        this.registerPOM.clickRegisterBtn();
-	}
-	
-	@Then ("Register: The user will be redirected to the login page")
-	public void register_the_user_will_be_redirected_to_the_login_page () {
-        this.registerPOM.waitForSuccessfulRegister();
-        assertEquals("http://localhost:4200/login", this.registerPOM.getCurrentUrl());
-	}
-	
 	@When ("Register: The user enters an invalid first name")
 	public void register_the_user_enters_an_invalid_first_name () {
         this.registerPOM.firstNameInput("");
@@ -116,6 +99,23 @@ public class RegisterSDF {
 	@Then ("Register: An error is shown saying the password confirmation is invalid")
 	public void register_an_error_is_shown_saying_the_password_confirmation_is_invalid () {
         assertEquals("Passwords do not match.", this.registerPOM.getErrorMessage());
+	}
+
+	@When ("Register: The user enters valid user information")
+	public void register_the_user_enters_valid_user_information () {
+		this.registerPOM.firstNameInput("Selenium");
+		this.registerPOM.lastNameInput("Test");
+		this.registerPOM.emailInput("test@mail.com");
+		this.registerPOM.usernameInput("SeleniumTest");
+		this.registerPOM.passwordInput("test");
+		this.registerPOM.confirmPasswordInput("test");
+		this.registerPOM.clickRegisterBtn();
+	}
+
+	@Then ("Register: The user will be redirected to the login page")
+	public void register_the_user_will_be_redirected_to_the_login_page () {
+		this.registerPOM.waitForSuccessfulRegister();
+		assertEquals("http://localhost:4200/login", this.registerPOM.getCurrentUrl());
 	}
 	
 	@When ("Register: The user clicks the login to an existing account button")
