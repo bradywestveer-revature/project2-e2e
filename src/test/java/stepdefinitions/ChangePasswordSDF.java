@@ -18,7 +18,8 @@ public class ChangePasswordSDF {
 	public void change_password_the_user_is_on_the_change_password_page () {
 		
 	}
-	
+
+	//todo make a mock token for testing?
 	@Given ("ChangePassword: The user has a valid token")
 	public void change_password_the_user_has_a_valid_token () {
 		
