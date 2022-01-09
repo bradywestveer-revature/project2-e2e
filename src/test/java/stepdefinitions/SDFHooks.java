@@ -29,6 +29,16 @@ public class SDFHooks {
 		registerPOM.passwordInput ("password");
 		registerPOM.confirmPasswordInput ("password");
 		registerPOM.clickRegisterBtn ();
+
+		DriverSingleton.getInstance ().get ("http://localhost:4200/register");
+
+		registerPOM.firstNameInput ("D");
+		registerPOM.lastNameInput ("d");
+		registerPOM.emailInput ("player1foreverr@gmail.com");
+		registerPOM.usernameInput ("d");
+		registerPOM.passwordInput ("d");
+		registerPOM.confirmPasswordInput ("d");
+		registerPOM.clickRegisterBtn ();
 	}
 	
 	//runs after every scenario
