@@ -117,6 +117,7 @@ public class MainSDF {
 		this.mainPOM.setPostBody ("test body 4 https://www.youtube.com/watch?v=PNWWuQbjaA8");
 		this.mainPOM.addImageToPost ();
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost ("test body 4 https://www.youtube.com/watch?v=PNWWuQbjaA8");
 	}
 	
 	@Then ("Main: The post is displayed with images and only the first video")
@@ -130,6 +131,7 @@ public class MainSDF {
 		this.mainPOM.setPostBody ("test body 5 https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
 		this.mainPOM.addImageToPost ();
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost ("test body 5 https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
 	}
 	
 	@When ("Main: The user clicks on the comment button on a post")
