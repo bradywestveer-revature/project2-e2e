@@ -52,12 +52,10 @@ public class ResetPasswordPOM {
 
 	public String getSuccessMessage() {
 		this.wait.until(ExpectedConditions.textToBe(By.className("errorText"), "Successfully sent password reset e-mail to player1foreverr@gmail.com."));
-		//this.wait.until(ExpectedConditions.visibilityOf(errMessage));
 		return this.errMessage.getText();
 	}
 
 	public String getErrorMessage() {
-		//this.wait.until(ExpectedConditions.textToBe(By.className("errorText"), "Successfully sent password reset e-mail to player1foreverr@gmail.com."));
 		this.wait.until(ExpectedConditions.visibilityOf(errMessage));
 		return this.errMessage.getText();
 	}

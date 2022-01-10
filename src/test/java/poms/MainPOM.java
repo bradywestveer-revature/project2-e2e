@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MainPOM {
 	final WebDriver driver;
@@ -38,6 +39,9 @@ public class MainPOM {
 	
 	@FindBy (tagName = "app-user")
 	List <WebElement> users;
+
+	@FindBy(tagName = "app-comment")
+	WebElement comment;
 	
 	public MainPOM (WebDriver driver) {
 		this.driver = driver;
@@ -74,16 +78,24 @@ public class MainPOM {
 	}
 	
 	public void submitPost () {
-		int postCount = getPostCount ();
-		
 		createPostSubmitContainer.findElement (By.tagName ("button")).click ();
-		
-		//todo find a way to wait for the post without using postCount, because pagination doesn't allow post count to go above 20
-		try {
-			Thread.sleep (2000);
+	}
+
+	public void waitForPost(String postBody){
+		this.wait.until(ExpectedConditions.textToBe(By.className("postBody"), postBody));
+	}
+
+	public void submit21Posts() {
+
+		for (int i = 1; i <= 20; i++) {
+			setPostBody ("TEST POST " + i);
+			createPostSubmitContainer.findElement (By.tagName ("button")).click ();
+			if(i == 20){
+				setPostBody ("TEST POST 21");
+				createPostSubmitContainer.findElement (By.tagName ("button")).click ();
+			}
+			this.wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("postBody"), i - 1));
 		}
-		
-		catch (InterruptedException ignored) {}
 	}
 	
 	public String getAlertText () {
@@ -146,17 +158,14 @@ public class MainPOM {
 	public int howManyComments (int postIndex) {
 		return this.postCommentsList.get (postIndex).findElements (By.tagName ("app-comment")).size ();
 	}
+
+	public void waitForPostComment(){
+		this.wait.until(ExpectedConditions.visibilityOf(comment));
+	}
 	
 	public void postComment (int postIndex, String body) {
 		this.postCommentsList.get (postIndex).findElement (By.className ("postCommentsInputContainer")).findElement (By.tagName ("input")).sendKeys (body);
 		this.postCommentsList.get (postIndex).findElement (By.className ("postCommentsInputContainer")).findElement (By.tagName ("button")).click ();
-		
-		//todo find a better way to wait
-		try {
-			Thread.sleep (2000);
-		}
-		
-		catch (InterruptedException ignored) {}
 	}
 	
 	public void clickUser () {

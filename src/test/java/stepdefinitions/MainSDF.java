@@ -62,8 +62,9 @@ public class MainSDF {
 	
 	@When ("Main: The user posts with a body")
 	public void main_the_user_posts_with_a_body () {
-		this.mainPOM.setPostBody ("test body");
+		this.mainPOM.setPostBody ("test body 0");
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost("test body 0");
 	}
 	
 	@Then ("Main: The post is displayed with a body")
@@ -71,14 +72,15 @@ public class MainSDF {
 		//todo somehow make sure that the post is not from a previous run
 		assertTrue (this.mainPOM.getPostCount () > 0);
 		
-		assertEquals ("test body", this.mainPOM.getPostBody (0));
+		assertEquals ("test body 0", this.mainPOM.getPostBody (0));
 	}
 	
 	@When ("Main: The user posts with a body and images")
 	public void main_the_user_posts_with_a_body_and_images () throws URISyntaxException {
-		this.mainPOM.setPostBody ("test body");
+		this.mainPOM.setPostBody ("test body 1");
 		this.mainPOM.addImageToPost ();
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost("test body 1");
 	}
 	
 	@Then ("Main: The post is displayed with a body and images")
@@ -86,15 +88,16 @@ public class MainSDF {
 		//todo somehow make sure that the post is not from a previous run
 		assertTrue (this.mainPOM.getPostCount () > 0);
 		
-		assertEquals ("test body", this.mainPOM.getPostBody (0));
+		assertEquals ("test body 1", this.mainPOM.getPostBody (0));
 		
 		assertTrue (this.mainPOM.doesPostHaveImages (0));
 	}
 	
 	@When ("Main: The user posts with a body and a video link")
 	public void main_the_user_posts_with_a_body_and_a_video_link () {
-		this.mainPOM.setPostBody ("test body https://www.youtube.com/watch?v=PNWWuQbjaA8");
+		this.mainPOM.setPostBody ("test body 2 https://www.youtube.com/watch?v=PNWWuQbjaA8");
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost("test body 2 https://www.youtube.com/watch?v=PNWWuQbjaA8");
 	}
 	
 	@Then ("Main: The post is displayed with a only the first video")
@@ -104,13 +107,14 @@ public class MainSDF {
 	
 	@When ("Main: The user posts with a body and multiple video links")
 	public void main_the_user_posts_with_a_body_and_multiple_video_links () {
-		this.mainPOM.setPostBody ("test body https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
+		this.mainPOM.setPostBody ("test body 3 https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
 		this.mainPOM.submitPost ();
+		this.mainPOM.waitForPost("test body 3 https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
 	}
 	
 	@When ("Main: The user posts with a body and images and a video link")
 	public void main_the_user_posts_with_a_body_and_images_and_a_video_link () throws URISyntaxException {
-		this.mainPOM.setPostBody ("test body https://www.youtube.com/watch?v=PNWWuQbjaA8");
+		this.mainPOM.setPostBody ("test body 4 https://www.youtube.com/watch?v=PNWWuQbjaA8");
 		this.mainPOM.addImageToPost ();
 		this.mainPOM.submitPost ();
 	}
@@ -123,7 +127,7 @@ public class MainSDF {
 	
 	@When ("Main: The user posts with a body and images and multiple video links")
 	public void main_the_user_posts_with_a_body_and_images_and_multiple_video_links () throws URISyntaxException {
-		this.mainPOM.setPostBody ("test body https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
+		this.mainPOM.setPostBody ("test body 5 https://www.youtube.com/watch?v=PNWWuQbjaA8 https://www.youtube.com/watch?v=QggJzZdIYPI");
 		this.mainPOM.addImageToPost ();
 		this.mainPOM.submitPost ();
 	}
@@ -160,7 +164,8 @@ public class MainSDF {
 	
 	@When ("Main: The user comments on a post")
 	public void main_the_user_comments_on_a_post () {
-		this.mainPOM.postComment (0, "test body");
+		this.mainPOM.postComment (0, "test body comment");
+		this.mainPOM.waitForPostComment();
 	}
 	
 	@Then ("Main: The comment is displayed and the comment count goes up by one")
@@ -180,16 +185,13 @@ public class MainSDF {
 		assertEquals (0, this.mainPOM.getCommentCount (0));
 	}
 	
-	@When ("Main: The user posts 20 posts")
-	public void main_the_user_posts_20_posts () {
-		for (int i = 0; i < 20; i++) {
-			this.mainPOM.setPostBody ("TEST POST " + i);
-			this.mainPOM.submitPost ();
-		}
+	@When ("Main: The user posts 21 posts")
+	public void main_the_user_posts_21_posts () {
+		this.mainPOM.submit21Posts();
 	}
 	
-	@Then ("Main: There are 20 posts")
-	public void main_there_are_at_least_20_posts () {
+	@Then ("Main: There are 21 posts")
+	public void main_there_are_at_least_21_posts () {
 		assertEquals (20, this.mainPOM.getPostCount ());
 	}
 	
