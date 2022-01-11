@@ -4,9 +4,9 @@ Feature: Profile Page
 		When Login: A user enters correct login credentials
 		Then Login: The user is redirected to their main feed
 		Given Main: The user is on the main page
-	Scenario: User navigates to their profile page after logging in User clicks Edit Profile information, should show profile edit fields
 		When Profile: The user clicks their profile
 		Then Profile: The user is taken to their profile page
+	Scenario: User navigates to their profile page after logging in User clicks Edit Profile information, should show profile edit fields
 		When Profile: User clicks Edit Profile
 		Then Profile: Edit profile input text boxes are shown with placeholders pre-populated with correct info
 	Scenario: Profile: User edits and does NOT make field changes clicks CHECK, profile of user should not change either

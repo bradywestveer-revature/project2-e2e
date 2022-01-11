@@ -170,7 +170,7 @@ public class ProfilePOM {
 	}
 
 	public void waitForEditProfileFieldsToBeHidden() {
-		this.wait.until(ExpectedConditions.invisibilityOf(profileEditControls.get(0)));
+		this.wait.until(ExpectedConditions.visibilityOf(profileEditButtonElem));
 	}
 
 	public Boolean validateEditProfileDidNotChangeProfileUser() {
@@ -193,6 +193,7 @@ public class ProfilePOM {
 	}	
 
 	public void clickProfileEditSubmitButton() {
+		this.wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("profileEditSubmitButton"), 0));
 		profileEditSubmitButtons.get(1).click();
 	}
 

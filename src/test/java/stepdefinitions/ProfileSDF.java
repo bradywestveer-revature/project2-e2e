@@ -23,10 +23,12 @@ public class ProfileSDF {
 	@Then("Profile: The user is taken to their profile page")
 	public void profile_the_user_is_taken_to_their_profile_page() {
 		assertTrue(profilePOM.waitForProfilePageToAppear());
-		profilePOM.getProfileFieldsBeforeEditProfileClicked();
 	}
 	@When("Profile: User clicks Edit Profile")
-	public void profile_user_clicks_edit_profile() { profilePOM.clickEditProfile(); }
+	public void profile_user_clicks_edit_profile() {
+		profilePOM.getProfileFieldsBeforeEditProfileClicked();
+		profilePOM.clickEditProfile();
+	}
 	@Then("Profile: Edit profile input text boxes are shown with placeholders pre-populated with correct info")
 	public void profile_edit_profile_input_text_boxes_are_shown_with_placeholders_pre_populated_with_correct_info() {
 		profilePOM.waitForProfileEditElems();
@@ -39,7 +41,10 @@ public class ProfileSDF {
 		assertEquals(this.profilePOM.getProfileUrl(), this.profilePOM.getCurrentUrl());
 	}
 	@When("Profile: User clicks check button")
-	public void profile_user_clicks_check_button() { profilePOM.clickProfileEditSubmitButton();	}
+	public void profile_user_clicks_check_button() {
+		profilePOM.clickEditProfile();
+		profilePOM.clickProfileEditSubmitButton();
+	}
 	@Then("Profile: User name was not changed no change in header or profile page")
 	public void profile_user_name_was_not_changed_no_change_in_header_or_profile_page() {
 		this.profilePOM.waitForEditProfileFieldsToBeHidden();
