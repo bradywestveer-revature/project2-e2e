@@ -6,10 +6,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 
 public class ProfilePOM {
+	static final String PROFILE_IMAGE_TEST="1.jpg";
+
 	final WebDriver driver;
 	final WebDriverWait wait;
 
@@ -30,6 +34,12 @@ public class ProfilePOM {
 
 	@FindBy(className = "profileContainer")
 	List<WebElement> profileContainer;
+
+	@FindBy (className = "editProfileImageInput")
+	WebElement editProfileImageInput;
+
+	@FindBy (className = "profileImage")
+	WebElement profileImage;
 
 	private String oldFirstname= "";
 	private String oldLastname= "";
@@ -319,5 +329,31 @@ public class ProfilePOM {
 
 	public String getCurrentUrl() {
 		return this.driver.getCurrentUrl();
+	}
+
+	public void addImageToProfile () throws URISyntaxException {
+		//get 1.jpg from src/test/resources/
+		URL url = ProfilePOM.class.getResource ("/"+this.PROFILE_IMAGE_TEST);
+		//System.out.println("url.getPath ().substring (1)="+url.getPath ().substring (1));
+		this.editProfileImageInput.sendKeys (url.getPath ().substring (1));
+	}
+
+
+	public Boolean validateTempProfileImageWasSet() {
+		wait.until(ExpectedConditions.attributeContains(profileImage, "src", "blob:http"));
+		// A temp image appears to be set in the web element
+		String imgURL = profileImage.getAttribute("src");
+		//System.out.println("imgURL="+imgURL);
+		if (imgURL.contains("blob:http")) return true;
+		return true;
+	}
+
+	public Boolean validateProfileImageWasSet() {
+		String searchString = this.getUsername()+this.PROFILE_IMAGE_TEST;
+		wait.withTimeout(Duration.ofSeconds(60)).until(ExpectedConditions.attributeContains(profileImage, "src", searchString));
+		String imgURL = profileImage.getAttribute("src");
+		//System.out.println("imgURL="+imgURL);
+		if (imgURL.contains(searchString)) return true;
+		return false;
 	}
 }

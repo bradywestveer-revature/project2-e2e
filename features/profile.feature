@@ -108,3 +108,9 @@ Feature: Profile Page
 		Given Main: The user is on the main page
 		When Profile: The user clicks their profile
 		Then Profile: The user is taken to their profile page
+	Scenario: Profile: User can update their profile image
+		Given Profile: User is already in edit profile mode
+		When Profile: The user adds an image to their profile
+		Then Profile: The profile image is displayed
+		When Profile: User clicks check button
+		Then Profile: Profile edit fields are hidden and new image is displayed

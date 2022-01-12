@@ -6,6 +6,8 @@ import io.cucumber.java.en.When;
 import poms.LoginPOM;
 import poms.ProfilePOM;
 
+import java.net.URISyntaxException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -154,5 +156,18 @@ public class ProfileSDF {
 	@Then("Profile: email field is filled in and not blank has original value")
 	public void profile_email_field_is_filled_in_and_not_blank_has_original_value() {
 		assertEquals("johnsmith@example.com", this.profilePOM.getProfileEditEmail());
+	}
+	@When("Profile: The user adds an image to their profile")
+	public void profile_the_user_adds_an_image_to_their_profile() throws URISyntaxException {
+		this.profilePOM.addImageToProfile();
+	}
+	@Then("Profile: The profile image is displayed")
+	public void profile_the_profile_image_is_displayed() {
+		assertTrue(this.profilePOM.validateTempProfileImageWasSet());
+	}
+	@Then("Profile: Profile edit fields are hidden and new image is displayed")
+	public void profile_profile_edit_fields_are_hidden_and_new_image_is_displayed() {
+		this.profilePOM.waitForEditProfileFieldsToBeHidden();
+		assertTrue(this.profilePOM.validateProfileImageWasSet());
 	}
 }
