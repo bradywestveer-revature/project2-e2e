@@ -204,9 +204,9 @@ public class ProfilePOM {
 	public void waitForEditProfileFieldsToBeHidden() {
 		// Waiting for the "Edit Profile" button is equivalent to all the fields being hidden
 		try {
-			//this.wait.until(ExpectedConditions.visibilityOf(profileEditButtonElem));
-			//this.wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.className("profileEditButton"))));
-			//this.wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(By.className("profileEditButton")), "Edit Profile"));
+			this.wait.until(ExpectedConditions.visibilityOf(profileEditButtonElem));
+			this.wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.className("profileEditButton"))));
+			this.wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(By.className("profileEditButton")), "Edit Profile"));
 			this.wait.until(ExpectedConditions.textToBe(By.tagName("Button"), "Edit Profile"));
 		} catch (StaleElementReferenceException e) {
 			e.printStackTrace();

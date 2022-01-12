@@ -171,4 +171,8 @@ public class MainPOM {
 	public void clickUser () {
 		this.users.get (0).findElement (By.className ("userContainer")).click ();
 	}
+	
+	public void waitForPostCount (int postCount) {
+		wait.until (ExpectedConditions.numberOfElementsToBeMoreThan (By.className ("postBody"), postCount));
+	}
 }

@@ -69,6 +69,8 @@ public class MainSDF {
 	
 	@Then ("Main: The post is displayed with a body")
 	public void main_the_post_is_displayed_with_a_body () {
+		this.mainPOM.waitForPostCount (1);
+		
 		//todo somehow make sure that the post is not from a previous run
 		assertTrue (this.mainPOM.getPostCount () > 0);
 		
