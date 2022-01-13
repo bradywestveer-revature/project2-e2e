@@ -204,7 +204,6 @@ public class ProfileSDF {
 	@Then("Profile: Second user is now in profile page and can only see their own posts not from anyone else")
 	public void profile_second_user_is_now_in_profile_page_and_can_only_see_their_own_posts_not_from_anyone_else() {
 		assertTrue(profilePOM.waitForProfilePageToAppear());
-		//assertTrue(profilePOM.waitForProfilePageToAppear2("seconduser"));
 		assertFalse(this.profilePOM.foundPost("First user's post 12345"));
 	}
 	@When("Profile: Second user creates post")
@@ -212,8 +211,6 @@ public class ProfileSDF {
 		this.profilePOM.setPostBody ("Second user's post 54321");
 		this.profilePOM.submitPost ();
 		this.profilePOM.waitForPost("Second user's post 54321");
-		profilePOM.clickProfileElement();
-		assertTrue(profilePOM.waitForProfilePageToAppear());
 	}
 	@Then("Profile: Second user only sees their own post")
 	public void profile_second_user_only_sees_their_own_post() throws InterruptedException {
