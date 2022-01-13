@@ -41,6 +41,15 @@ public class ProfilePOM {
 	@FindBy (className = "profileImage")
 	WebElement profileImage;
 
+	@FindBy (className = "createPostInput")
+	WebElement createPostInput;
+
+	@FindBy (className = "createPostSubmitContainer")
+	WebElement createPostSubmitContainer;
+
+	@FindBy (className = "postBody")
+	List<WebElement> postBodys;
+
 	private String oldFirstname= "";
 	private String oldLastname= "";
 	private String oldUsername= "";
@@ -82,6 +91,18 @@ public class ProfilePOM {
 
 	public Boolean waitForProfilePageToAppear() {
 		String profileURL = "http://localhost:4200/@" + this.getUsername();
+		//System.out.println("profileURL="+profileURL);
+		try {
+			this.wait.until(ExpectedConditions.urlToBe(profileURL));
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public Boolean waitForProfilePageToAppear2(String username) {
+		String profileURL = "http://localhost:4200/@" + username;
 		//System.out.println("profileURL="+profileURL);
 		try {
 			this.wait.until(ExpectedConditions.urlToBe(profileURL));
@@ -355,5 +376,43 @@ public class ProfilePOM {
 		//System.out.println("imgURL="+imgURL);
 		if (imgURL.contains(searchString)) return true;
 		return false;
+	}
+
+	public void setPostBody (String body) {
+		this.createPostInput.sendKeys (body);
+	}
+
+	public void submitPost () {
+		createPostSubmitContainer.findElement (By.tagName ("button")).click ();
+	}
+
+	public void waitForPost(String postBody){
+		this.wait.until(ExpectedConditions.textToBe(By.className("postBody"), postBody));
+	}
+
+	public void waitForPosts() {
+		this.wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.className("postBody"), 0));
+	}
+
+	public Boolean foundPost(String post) {
+		Boolean found = false;
+		/*if (postBodys.size()==0) {
+			System.out.println("No posts at all found.");
+		}*/
+		for (WebElement postBody:postBodys) {
+			if (postBody.getText().equals(post)) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	public void gotoProfilePage(String username) {
+		driver.navigate().to("http://localhost:4200/@"+username);
+	}
+
+	public void waitForLoginPage() {
+		this.wait.until(ExpectedConditions.urlToBe("http://localhost:4200/login"));
 	}
 }

@@ -114,3 +114,19 @@ Feature: Profile Page
 		Then Profile: The profile image is displayed
 		When Profile: User clicks check button
 		Then Profile: Profile edit fields are hidden and new image is displayed
+	Scenario: Profile: User can create their own posts from their profile page
+		When Profile: User creates post from their profile page
+		Then Profile: User own post is shown
+		When Profile: User logs out
+		Then Profile: Login page is now shown
+		When Profile: Second user logs in and clicks their info in header
+		Then Profile: Second user is now in profile page and can only see their own posts not from anyone else
+		When Profile: Second user creates post
+		Then Profile: Second user only sees their own post
+		When Profile: Second user logs out
+		Then Profile: Login page is now shown
+	Scenario: Profile: User pages only shown that users posts from their profile pages
+		When First User is on their own page
+		Then No other users posts are shown
+		When First user now goes to second users profile
+		Then Only second users posts are shown

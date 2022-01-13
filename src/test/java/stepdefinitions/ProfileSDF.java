@@ -3,13 +3,13 @@ package stepdefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
 import poms.LoginPOM;
 import poms.ProfilePOM;
 
 import java.net.URISyntaxException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ProfileSDF {
 	final ProfilePOM profilePOM;
@@ -100,6 +100,7 @@ public class ProfileSDF {
 		this.loginPOM.usernameInput ("johnsmith");
 		this.loginPOM.passwordInput ("pass123");
 		this.loginPOM.clickLogin ();
+		this.loginPOM.waitForSuccessfulLogin ();
 	}
 	@When("Profile: User changes password field back to original")
 	public void profile_user_changes_password_field_back_to_original() {
@@ -123,6 +124,7 @@ public class ProfileSDF {
 		this.loginPOM.usernameInput ("jsmythe");
 		this.loginPOM.passwordInput ("password");
 		this.loginPOM.clickLogin ();
+		this.loginPOM.waitForSuccessfulLogin ();
 	}
 
 	@When("Profile: User changes username field back to original")
@@ -148,6 +150,7 @@ public class ProfileSDF {
 		this.loginPOM.usernameInput ("johnsmith@gmail.com");
 		this.loginPOM.passwordInput ("password");
 		this.loginPOM.clickLogin ();
+		this.loginPOM.waitForSuccessfulLogin ();
 	}
 	@When("Profile: User changes email field back to original")
 	public void profile_user_changes_email_field_back_to_original() {
@@ -169,5 +172,78 @@ public class ProfileSDF {
 	public void profile_profile_edit_fields_are_hidden_and_new_image_is_displayed() {
 		this.profilePOM.waitForEditProfileFieldsToBeHidden();
 		assertTrue(this.profilePOM.validateProfileImageWasSet());
+	}
+
+	@When("Profile: User creates post from their profile page")
+	public void profile_user_creates_post_from_their_profile_page() {
+		this.profilePOM.setPostBody ("First user's post 12345");
+		this.profilePOM.submitPost ();
+		this.profilePOM.waitForPost("First user's post 12345");
+	}
+	@Then("Profile: User own post is shown")
+	public void profile_user_own_post_is_shown() {
+		assertTrue(this.profilePOM.foundPost("First user's post 12345"));
+	}
+	@When("Profile: User logs out")
+	public void profile_user_logs_out() {
+		this.profilePOM.clickLogoutButton();
+	}
+	@Then("Profile: Login page is now shown")
+	public void profile_login_page_is_now_shown() {
+		this.profilePOM.waitForLoginPage();
+		Assertions.assertEquals ("http://localhost:4200/login", this.profilePOM.getCurrentUrl ());
+	}
+	@When("Profile: Second user logs in and clicks their info in header")
+	public void profile_second_user_logs_in_and_clicks_their_info_in_header() {
+		this.loginPOM.usernameInput ("seconduser");
+		this.loginPOM.passwordInput ("password");
+		this.loginPOM.clickLogin ();
+		this.loginPOM.waitForSuccessfulLogin ();
+		profilePOM.clickProfileElement();
+	}
+	@Then("Profile: Second user is now in profile page and can only see their own posts not from anyone else")
+	public void profile_second_user_is_now_in_profile_page_and_can_only_see_their_own_posts_not_from_anyone_else() {
+		assertTrue(profilePOM.waitForProfilePageToAppear());
+		//assertTrue(profilePOM.waitForProfilePageToAppear2("seconduser"));
+		assertFalse(this.profilePOM.foundPost("First user's post 12345"));
+	}
+	@When("Profile: Second user creates post")
+	public void profile_second_user_creates_post() {
+		this.profilePOM.setPostBody ("Second user's post 54321");
+		this.profilePOM.submitPost ();
+		this.profilePOM.waitForPost("Second user's post 54321");
+		profilePOM.clickProfileElement();
+		assertTrue(profilePOM.waitForProfilePageToAppear());
+	}
+	@Then("Profile: Second user only sees their own post")
+	public void profile_second_user_only_sees_their_own_post() throws InterruptedException {
+		this.profilePOM.waitForPosts();
+		assertTrue(this.profilePOM.foundPost("Second user's post 54321"));
+		assertFalse(this.profilePOM.foundPost("First user's post 12345"));
+	}
+	@When("Profile: Second user logs out")
+	public void profile_second_user_logs_out() {
+		this.profilePOM.clickLogoutButton();
+	}
+
+	@When("First User is on their own page")
+	public void first_user_is_on_their_own_page() {
+		assertTrue(profilePOM.waitForProfilePageToAppear());
+	}
+	@Then("No other users posts are shown")
+	public void no_other_users_posts_are_shown() {
+		this.profilePOM.waitForPosts();
+		assertFalse(this.profilePOM.foundPost("Second user's post 54321"));
+		assertTrue(this.profilePOM.foundPost("First user's post 12345"));
+	}
+	@When("First user now goes to second users profile")
+	public void first_user_now_goes_to_second_users_profile() {
+		this.profilePOM.gotoProfilePage("seconduser");
+	}
+	@Then("Only second users posts are shown")
+	public void only_second_users_posts_are_shown() {
+		this.profilePOM.waitForPosts();
+		assertTrue(this.profilePOM.foundPost("Second user's post 54321"));
+		assertFalse(this.profilePOM.foundPost("First user's post 12345"));
 	}
 }
