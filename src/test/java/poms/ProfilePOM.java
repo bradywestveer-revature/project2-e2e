@@ -341,7 +341,11 @@ public class ProfilePOM {
 	}
 
 	public void clickLogoutButton() {
-		driver.findElement(By.id("headerUser")).findElement(By.tagName("a")).click();
+		WebElement logoutButton = driver.findElement(By.id("headerUser")).findElement(By.tagName("a"));
+		
+		wait.until (ExpectedConditions.elementToBeClickable (logoutButton));
+		
+		logoutButton.click ();
 	}
 
 	public String getProfileUrl() {
